@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import env from "react-dotenv";
 import axios from 'axios';
 
-const rootUrl = 'https://api.github.com';
-console.log(rootUrl);
+const rootUrl = 'https://reminder-api-yzxj.onrender.com/api/v1/reminders';
+console.log(env.API_URL);
 
 // Call where you need
 const GitHubContext = React.createContext();
