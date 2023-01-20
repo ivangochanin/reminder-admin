@@ -1,19 +1,11 @@
 import React from 'react';
-import { GiReloadGunBarrel } from 'react-icons/gi';
-import ViewTemplate from '../components/layout/ViewTemplate';
-import { color } from '../configs/utilities';
-
-
+import { ViewWrapper } from '../components/common/wrappers/Wrappers';
 
 const Reminders = () => {
 	return (
-		<ViewTemplate
-			title="Reminders"
-			to="/"
-			buttonText="Go Home"
-			icon={<GiReloadGunBarrel className="icon" size={'200px'} />}
-			iconTextColor={color.yellow}
-		/>
+		<ViewWrapper>
+			Reminders
+		</ViewWrapper>
 	);
 };
 

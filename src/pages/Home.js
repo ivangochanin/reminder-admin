@@ -7,9 +7,7 @@ const Home = () => {
 	return (
 		<PageWrapper>
 			<ViewWrapper>
-				<Wrapper>
-
-				</Wrapper>
+				<Wrapper>Dashboard App with Data Grid Visualization, Charts ...</Wrapper>
 			</ViewWrapper>
 		</PageWrapper>
 	);
@@ -23,5 +21,4 @@ const PageWrapper = styled.div`
 	}
 `;
 
-const Wrapper = styled.div`
-`;
+const Wrapper = styled.div``;

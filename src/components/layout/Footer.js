@@ -1,14 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { color } from '../../configs/utilities';
-import { LayoutWrapper } from '../common/wrappers/Wrappers';
 
 const Footer = () => {
 	return (
 		<Wrapper>
-			<LayoutWrapper>
-				<Content>©Lorem 2022, All Rights Reserved</Content>
-			</LayoutWrapper>
+			<Content>©Lorem 2022, All Rights Reserved</Content>
 		</Wrapper>
 	);
 };
@@ -18,7 +15,7 @@ export default Footer;
 const Wrapper = styled.div`
 	width: 100%;
 	background: ${color.silver};
-	color: ${color.black};
+	color: ${color.blue};
 `;
 
 const Content = styled.div`
