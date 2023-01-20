@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { color } from '../configs/utilities';
 import { ViewWrapper } from '../components/common/wrappers/Wrappers';
 import { DataGrid } from '@mui/x-data-grid';
 import env from 'react-dotenv';
 import axios from 'axios';
+import Button from '@mui/material/Button';
+
 
 const Categories = () => {
 	const url = env.API_URL;
 	const [categories, setCategories] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	const getCategories = async () => {
-		axios
-			/* .get(`${url}/admin/categories`) */
-			.get('https://jsonplaceholder.typicode.com/posts')
-			.then((res) => {
-				console.log(res);
-				setCategories(res.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			setLoading(true)
+			const response = await axios.get(`${url}/admin/categories`)
+			console.log(response);
+			setCategories(response.data.allCategories);
+			setLoading(false)
+			
+		} catch (error) {
+			console.log(error);
+			setLoading(false)
+		}
 	};
 
 	useEffect(() => {
@@ -27,40 +33,44 @@ const Categories = () => {
 	}, [setCategories]);
 
 	const columns = [
-		{ field: 'id', headerName: 'ID', width: 70 },
-		{ field: 'title', headerName: 'Title', width: 130 },
-		{ field: 'content', headerName: 'Content', width: 130 },
-		{ field: 'created', headerName: 'Created', width: 130 },
+		{ field: '_id', headerName: 'ID', width: 250 },
+		{ field: 'name', headerName: 'Name', width: 200 },
+		{ field: 'slug', headerName: 'Slug', width: 200 },
+		{ field: 'order', headerName: 'Order', width: 200 },
+		{ field: 'createdAt', headerName: 'Created At', width: 200 },
 	];
-
-	/* const rows = [
-		{ id: 1, content: 'Snow', title: 'Jon', age: 35 },
-		{ id: 2, content: 'Tod', title: 'Zorn', age: 42 },
-		{ id: 3, content: 'Jan', title: 'Jaime', age: 45 },
-		{ id: 4, content: 'Stark', title: 'Copland', age: 16 },
-		{ id: 5, content: 'Aaron', title: 'Goldberg', age: null },
-		{ id: 6, content: 'Melisa', title: null, age: 150 },
-		{ id: 7, content: 'Clifford', title: 'Ferrara', age: 44 },
-		{ id: 8, content: 'Frances', title: 'Rossini', age: 36 },
-		{ id: 9, content: 'Roxie', title: 'Harvey', age: 65 },
-	]; */
-
 	return (
 		<ViewWrapper>
-			<div style={{ height: 900, width: '100%' }}>
+			<Header>
+				<h1>Categories</h1>
+				<Button variant="outlined" size="large">CREATE CATEGORY</Button>
+			</Header>
+			<TableWrapper>
 				<DataGrid
+					getRowId={(row) => row._id}
 					rows={categories}
 					columns={columns}
 					pageSize={5}
 					rowsPerPageOptions={[5]}
-					checkboxSelection
+					loading={loading}
 				/>
-			</div>
-			{categories.map(category => (
-				<span key={category.id}>{category.title}</span>
-			))}
+			</TableWrapper>
 		</ViewWrapper>
 	);
 };
 
 export default Categories;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  h1 {
+	color: ${color.blue};
+  }
+`
+
+const TableWrapper = styled.div`
+	width: 100%;
+	height: 700px;  // table MUST have height prop
+`;
