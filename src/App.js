@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Dashboard, Error } from './pages';
+import { Home, Categories, SubCategories, Reminders, Error } from './pages';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -31,7 +31,10 @@ function App() {
 			<Navbar />
 			<AnimationWrapper ref={containerContent}>
 				<Routes>
-					<Route path="/" element={<Dashboard />} exact={true} />
+					<Route path="/" element={<Home />} exact={true} />
+					<Route path="/categories" element={<Categories />} exact={true} />
+					<Route path="/subcategories" element={<SubCategories />} exact={true} />
+					<Route path="/reminders" element={<Reminders />} exact={true} />
 					<Route path="*" element={<Error />} />
 				</Routes>
 			</AnimationWrapper>

@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { breakpoint, color } from '../configs/utilities';
 import { ViewWrapper } from '../components/common/wrappers/Wrappers';
 
-
-
-const Dashboard = () => {
+const Home = () => {
 	return (
 		<PageWrapper>
 			<ViewWrapper>
@@ -17,7 +15,7 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+export default Home;
 
 const PageWrapper = styled.div`
 	@media screen and (min-width: ${breakpoint.xl}) {
