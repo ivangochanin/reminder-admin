@@ -16,7 +16,7 @@ export const color = {
   gray: '#BFBDBD',
   green: '#548853',
   greenButton: '#565809',
-  blue: '#1069DA',
+  blue: '#2C66B3',
   purple: '#8a3fb0',
   link: '#0000EE',
   red: '#E35151',

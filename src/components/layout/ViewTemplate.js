@@ -27,8 +27,8 @@ const PageWrapper = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background: ${color.blue};
-	color: ${color.white};
+
+	color: ${color.blue};
 
 	@media screen and (min-width: ${breakpoint.xl}) {
 	}
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 	}
 
 	a {
-		color: ${color.blue};
+		color: ${color.white};
 	}
 `;
 
@@ -56,7 +56,7 @@ const Button = styled.div`
 	width: 200px;
 	height: 50px;
 	border-radius: 20px;
-	background: ${color.white};
+	background: ${color.blue};
 	font-size: 24px;
 	font-weight: 700;
 	letter-spacing: 1px;

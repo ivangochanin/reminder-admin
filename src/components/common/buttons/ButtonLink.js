@@ -27,7 +27,7 @@ const ButtonStyle = styled.span`
   align-items: center;
   padding: 10px 20px;
   background: ${color.blue};
-  color: ${color.white};
+  color: ${color.blue};
   font-size: 14px;
   font-weight: 400;
   text-align: center;

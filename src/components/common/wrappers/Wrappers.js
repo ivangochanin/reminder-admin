@@ -2,12 +2,12 @@ import styled from 'styled-components'
 import { breakpoint } from '../../../configs/utilities'
 
 export const ContentWrapper = styled.div`
-  max-width: 1680px;
+  /* max-width: 1680px; */
   margin: 0 auto;
   `
 
 export const LayoutWrapper = styled.div`
-  max-width: 1680px;
+  /* max-width: 1680px; */
   margin: 0 auto;
   padding: 0 20px;
   @media screen and (min-width: ${breakpoint.md}) {
@@ -20,8 +20,8 @@ export const LayoutWrapper = styled.div`
   `
 
 export const ViewWrapper = styled.div`
-  max-width: 1680px;
-	height: 88vh;
+  /* max-width: 1680px; */
+	height: 95vh;
   overflow-x: auto;
   margin: 0 auto;
   padding: 30px 20px;
