@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import env from "react-dotenv";
 import axios from 'axios';
 
-const rootUrl = 'https://reminder-api-yzxj.onrender.com/api/v1/reminders';
-console.log(env.API_URL);
 
 // Call where you need
-const GitHubContext = React.createContext();
+const ReminderDataContext = React.createContext();
 
 // Wrap whole App - index.js
-const GitHubProvider = ({ children }) => {  
+const ReminderProvider = ({ children }) => {  
     const [someData, setSomeData] = useState()
     const [someOtherData, setSomeOtherData] = useState()
+    /* console.log(env.API_URL); */
 
-	return <GitHubContext.Provider value={{someData, someOtherData }}>{children}</GitHubContext.Provider>;
+	return <ReminderDataContext.Provider value={{someData, someOtherData }}>{children}</ReminderDataContext.Provider>;
 };
 
-export {GitHubProvider, GitHubContext}
+export {ReminderProvider, ReminderDataContext}
