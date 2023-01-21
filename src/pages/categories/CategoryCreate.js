@@ -4,6 +4,7 @@ import PageHead from '../../components/common/wrappers/PageHead';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import { transition, color } from '../../configs/utilities';
+/* import axios from 'axios'; */
 
 const CategoryCreate = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -17,6 +18,7 @@ const CategoryCreate = () => {
 	const [loading, setLoading] = useState(false);
 	const [successMessage, setSuccessMessage] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
+	const [errors, setErrors] = useState({});
 
 	const handleData = (e) => {
 		const newData = { ...selectedData };
@@ -24,38 +26,27 @@ const CategoryCreate = () => {
 		setSelectedData(newData);
 	};
 
-	let formValues = {
-		name: selectedData.name,
-		slug: selectedData.slug,
-		order: selectedData.order,
-	};
-
-	const handleFormSubmit = (e) => {
-		e.preventDefault();
-
-		setLoading(true);
-		console.log(formValues);
-	};
-
-	const [form, setForm] = useState({ title: '', description: '' });
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [errors, setErrors] = useState({});
-
 	// Run only when we have errors
 	useEffect(() => {
-		if (isSubmitting) {
+		if (loading) {
+			createReminder();
+			alert('Success');
+			setLoading(false);
+
 			// if we do not have any errors than create note
-			if (Object.keys(errors).length === 0) {
-				createNote();
-				/* alert('Success') */
+			/* if (Object.keys(errors).length === 0) {
+				createReminder();
+				alert('Success')
 			} else {
-				setIsSubmitting(false);
-			}
+				setLoading(false);
+			} */
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [errors]);
 
-	const createNote = async () => {
+	const createReminder = async (e) => {
+		e.preventDefault();
+		setLoading(true);
 		try {
 			// fetch - second arg - pass object to add props to post request
 			await fetch(`${url}/admin/categories`, {
@@ -65,40 +56,17 @@ const CategoryCreate = () => {
 					'Content-Type': 'application/json',
 				},
 				// in body pass form state
-				body: JSON.stringify(form),
+				body: JSON.stringify(selectedData),
 			});
+			setSuccessMessage('success');
 			// when fetch is done go back to home page
 		} catch (error) {
 			console.log(error);
+			setErrorMessage('error message from create');
+			setErrors()
 		}
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		let errs = validate();
-		setErrors(errs);
-		setIsSubmitting(true);
-	};
-
-	const handleChange = (e) => {
-		setForm({
-			...form,
-			[e.target.name]: e.target.value,
-		});
-	};
-
-	const validate = () => {
-		let err = {};
-		// if empty
-		if (!form.title) {
-			// add title prop with message
-			err.title = 'Title is required';
-		}
-		if (!form.description) {
-			err.title = 'Description is required';
-		}
-		return err;
-	};
 	return (
 		<ViewWrapper>
 			<PageHead
@@ -106,7 +74,7 @@ const CategoryCreate = () => {
 				to="/categories"
 				buttonText="SEE ALL CATEGORIES"
 			/>
-			<Form onSubmit={(e) => handleFormSubmit(e)}>
+			<Form onSubmit={(e) => createReminder(e)}>
 				<InputWrapper>
 					<TextField
 						name="name"

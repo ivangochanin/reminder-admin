@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import { breakpoint, color } from '../../configs/utilities';
-import { FaHome } from 'react-icons/fa';
+import { RiHome2Line } from 'react-icons/ri';
 import { BiCategoryAlt } from 'react-icons/bi';
 import { MdOutlineCategory } from 'react-icons/md';
-import { GiReloadGunBarrel } from 'react-icons/gi';
-import { NavLink } from 'react-router-dom';
+import { BiNotepad } from 'react-icons/bi';
 
 const Sidebar = () => {
 	return (
@@ -14,7 +14,7 @@ const Sidebar = () => {
 				<Content>
 				<h1>ADMIN PANEL</h1>
 					<NavLink to="/">
-						<FaHome className="icon" size={'30px'} /> 
+						<RiHome2Line className="icon" size={'30px'} /> 
 						<span>Home</span>
 					</NavLink>
 					<NavLink to="/categories">
@@ -26,7 +26,7 @@ const Sidebar = () => {
 						<span>SubCategories</span>
 					</NavLink>
 					<NavLink to="/reminders">
-						<GiReloadGunBarrel className="icon" size={'30px'} /> 
+						<BiNotepad className="icon" size={'30px'} /> 
 						<span>Reminders</span>
 					</NavLink>
 				</Content>

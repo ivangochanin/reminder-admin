@@ -3,21 +3,17 @@ import styled from 'styled-components';
 import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import PageHead from '../../components/common/wrappers/PageHead'
+import PageHead from '../../components/common/wrappers/PageHead';
 
 const Categories = () => {
 	const url = process.env.REACT_APP_API_URL;
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(false);
 
-
-	console.log('test', `${url}/admin/categories`);
-
 	const getCategories = async () => {
 		try {
 			setLoading(true);
 			const response = await axios.get(`${url}/admin/categories`);
-			console.log(response);
 			setCategories(response.data.allCategories);
 			setLoading(false);
 		} catch (error) {
@@ -41,12 +37,13 @@ const Categories = () => {
 	return (
 		<ViewWrapper>
 			<PageHead
-			 title='CATEGORIES'
-			 to="/categories/create" 
-			 buttonText='CREATE CATEGORY'
+				title="CATEGORIES"
+				to="/categories/create"
+				buttonText="CREATE CATEGORY"
 			/>
 			<TableWrapper>
 				<DataGrid
+					sx={{ border: 0 }}
 					getRowId={(row) => row._id}
 					rows={categories}
 					columns={columns}
@@ -65,4 +62,3 @@ const TableWrapper = styled.div`
 	width: 100%;
 	height: 700px; // table MUST have height prop
 `;
-

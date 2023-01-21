@@ -2,14 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { breakpoint, color } from '../configs/utilities';
 import { ViewWrapper } from '../components/common/wrappers/Wrappers';
-import { PageTitle } from '../components/common/typography/Typography';
+import PageHead from '../components/common/wrappers/PageHead';
 
 const Home = () => {
 	return (
 		<PageWrapper>
 			<ViewWrapper>
 				<Wrapper>
-					<PageTitle>Dashboard with:</PageTitle>
+					<PageHead
+						title="Dashboard with:"
+						to="/reminders"
+						buttonText="SEE ALL REMINDERS"
+					/>
 					<ul>
 						<li>Data Grid Visualization</li>
 						<li>Charts</li>
@@ -33,7 +37,7 @@ const PageWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-  ul {
-	margin: 50px;
-  }
+	ul {
+		margin: 50px;
+	}
 `;
