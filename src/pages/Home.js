@@ -2,12 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { breakpoint, color } from '../configs/utilities';
 import { ViewWrapper } from '../components/common/wrappers/Wrappers';
+import { PageTitle } from '../components/common/typography/Typography';
 
 const Home = () => {
 	return (
 		<PageWrapper>
 			<ViewWrapper>
-				<Wrapper>Dashboard App with Data Grid Visualization, Charts ...</Wrapper>
+				<Wrapper>
+					<PageTitle>Dashboard with:</PageTitle>
+					<ul>
+						<li>Data Grid Visualization</li>
+						<li>Charts</li>
+						<li>Popular categories</li>
+						<li>Popular subcategories</li>
+						<li>Popular reminders</li>
+						<li>Last added</li>
+					</ul>
+				</Wrapper>
 			</ViewWrapper>
 		</PageWrapper>
 	);
@@ -21,4 +32,8 @@ const PageWrapper = styled.div`
 	}
 `;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  ul {
+	margin: 50px;
+  }
+`;

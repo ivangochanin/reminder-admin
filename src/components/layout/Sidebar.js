@@ -39,7 +39,7 @@ export default Sidebar;
 
 const Wrapper = styled.div`
 	width: 100%;
-	min-height: 95vh;
+	height: 95vh;
 	background: ${color.blue};
     padding: 30px 30px;
   
@@ -70,10 +70,10 @@ const Content = styled.div`
     row-gap: 20px;
     
 	h1{
-      color: ${color.gray};
+      color: ${color.white};
 	  opacity: .8;
-	  font-size: 30px;
-	  font-weight: 800;
+	  font-size: 34px;
+	  font-weight: 400;
 	  letter-spacing: 2px;
 	  margin-bottom: 50px;
 	}

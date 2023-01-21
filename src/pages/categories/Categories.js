@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { color } from '../configs/utilities';
-import { ViewWrapper } from '../components/common/wrappers/Wrappers';
+import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
 import { DataGrid } from '@mui/x-data-grid';
-import env from 'react-dotenv';
 import axios from 'axios';
-import Button from '@mui/material/Button';
-
+import PageHead from '../../components/common/wrappers/PageHead'
 
 const Categories = () => {
-	const url = env.API_URL;
+	const url = process.env.REACT_APP_API_URL;
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(false);
 
+
+	console.log('test', `${url}/admin/categories`);
+
 	const getCategories = async () => {
 		try {
-			setLoading(true)
-			const response = await axios.get(`${url}/admin/categories`)
+			setLoading(true);
+			const response = await axios.get(`${url}/admin/categories`);
 			console.log(response);
 			setCategories(response.data.allCategories);
-			setLoading(false)
-			
+			setLoading(false);
 		} catch (error) {
 			console.log(error);
-			setLoading(false)
+			setLoading(false);
 		}
 	};
 
@@ -41,10 +40,11 @@ const Categories = () => {
 	];
 	return (
 		<ViewWrapper>
-			<Header>
-				<h1>Categories</h1>
-				<Button variant="outlined" size="large">CREATE CATEGORY</Button>
-			</Header>
+			<PageHead
+			 title='CATEGORIES'
+			 to="/categories/create" 
+			 buttonText='CREATE CATEGORY'
+			/>
 			<TableWrapper>
 				<DataGrid
 					getRowId={(row) => row._id}
@@ -61,16 +61,8 @@ const Categories = () => {
 
 export default Categories;
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 50px;
-  h1 {
-	color: ${color.blue};
-  }
-`
-
 const TableWrapper = styled.div`
 	width: 100%;
-	height: 700px;  // table MUST have height prop
+	height: 700px; // table MUST have height prop
 `;
+
