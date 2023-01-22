@@ -4,7 +4,7 @@ import PageHead from '../../components/common/wrappers/PageHead';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import { transition, color } from '../../configs/utilities';
-/* import axios from 'axios'; */
+import axios from 'axios';
 
 const CategoryCreate = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -49,7 +49,7 @@ const CategoryCreate = () => {
 		setLoading(true);
 		try {
 			// fetch - second arg - pass object to add props to post request
-			await fetch(`${url}/admin/categories`, {
+			/* await fetch(`${url}/admin/categories`, {
 				method: 'POST',
 				headers: {
 					Accept: 'application/json',
@@ -57,7 +57,8 @@ const CategoryCreate = () => {
 				},
 				// in body pass form state
 				body: JSON.stringify(selectedData),
-			});
+			}); */
+			await axios.post(`${url}/admin/categories`, selectedData)
 			setSuccessMessage('success');
 			// when fetch is done go back to home page
 		} catch (error) {
