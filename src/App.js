@@ -56,7 +56,7 @@ function App() {
 								exact={true}
 							/>
 							<Route
-								path="/categories/edit"
+								path="/categories/:id/edit"
 								element={<CategoryEdit />}
 								exact={true}
 							/>

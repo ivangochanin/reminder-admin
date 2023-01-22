@@ -26,7 +26,7 @@ const CategoryCreate = () => {
 		setFormData(newData);
 	};
 
-	const createReminder = async (e) => {
+	const createCategory = async (e) => {
 		e.preventDefault();
 		try {
 			setLoading(true);
@@ -46,7 +46,7 @@ const CategoryCreate = () => {
 				to="/categories"
 				buttonText="SEE ALL CATEGORIES"
 			/>
-			<Form onSubmit={(e) => createReminder(e)}>
+			<Form onSubmit={(e) => createCategory(e)}>
 				<InputWrapper>
 					<TextField
 						name="name"

@@ -9,6 +9,7 @@ import { MdOutlineModeEditOutline } from 'react-icons/md';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Categories = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -19,6 +20,8 @@ const Categories = () => {
 	const handleClose = () => setOpen(false);
 
 	const [selectedCategory, setSelectedCategory] = useState({});
+
+	const navigate = useNavigate();
 
 	const getCategories = async () => {
 		try {
@@ -35,19 +38,21 @@ const Categories = () => {
 	useEffect(() => {
 		getCategories();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [setCategories]);
+	}, []);
 
 	const editCategory = useCallback(
 		(id) => () => {
-			console.log('edit category', id);
+			/* console.log('edit category', id); */
+			// Use useNavigate for programmatic navigation to the clicked route with id
+			navigate(`/categories/${id}/edit`);
 		},
 
-		[]
+		[navigate]
 	);
 
 	const openDeleteModal = useCallback(
 		(category) => () => {
-			console.log('delete category', category.row);
+			/* console.log('delete category', category.row); */
 			setSelectedCategory(category.row)
 			handleOpen();
 		},
