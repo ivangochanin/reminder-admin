@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import axios from 'axios';
 import PageHead from '../../components/common/wrappers/PageHead';
+import { RiDeleteBin4Line } from 'react-icons/ri';
+import { MdOutlineModeEditOutline } from 'react-icons/md';
 
 const Categories = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -27,13 +29,55 @@ const Categories = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [setCategories]);
 
-	const columns = [
-		{ field: '_id', headerName: 'ID', width: 250 },
-		{ field: 'name', headerName: 'Name', width: 200 },
-		{ field: 'slug', headerName: 'Slug', width: 200 },
-		{ field: 'order', headerName: 'Order', width: 200 },
-		{ field: 'createdAt', headerName: 'Created At', width: 200 },
-	];
+	const editCategory = useCallback(
+		(id) => () => {
+			console.log('edit category', id);
+			/* setTimeout(() => {
+			setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+		  }); */
+		},
+		[]
+	);
+
+	const deleteCategory = useCallback(
+		(id) => () => {
+			console.log('delete category', id);
+			/* setTimeout(() => {
+			setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+		  }); */
+		},
+		[]
+	);
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const columns = useMemo(
+		() => [
+			{ field: '_id', headerName: 'ID', width: 250 },
+			{ field: 'name', headerName: 'NAME', width: 200 },
+			{ field: 'slug', headerName: 'SLUG', width: 200 },
+			{ field: 'order', headerName: 'ORDER', width: 200 },
+			{ field: 'createdAt', headerName: 'CREATED AT', type: 'date', width: 200 },
+			{
+				field: 'actions',
+				type: 'actions',
+				headerName: 'ACTIONS',
+				width: 80,
+				getActions: (params) => [
+					<GridActionsCellItem
+						icon={<MdOutlineModeEditOutline />}
+						label="Edit"
+						onClick={editCategory(params.id)}
+					/>,
+					<GridActionsCellItem
+						icon={<RiDeleteBin4Line />}
+						label="Delete"
+						onClick={deleteCategory(params.id)}
+					/>,
+				],
+			},
+		],
+		[deleteCategory, editCategory]
+	);
 	return (
 		<ViewWrapper>
 			<PageHead
@@ -47,8 +91,8 @@ const Categories = () => {
 					getRowId={(row) => row._id}
 					rows={categories}
 					columns={columns}
-					pageSize={5}
-					rowsPerPageOptions={[5]}
+					pageSize={10}
+					rowsPerPageOptions={[10]}
 					loading={loading}
 				/>
 			</TableWrapper>
