@@ -6,11 +6,19 @@ import axios from 'axios';
 import PageHead from '../../components/common/wrappers/PageHead';
 import { RiDeleteBin4Line } from 'react-icons/ri';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 const Categories = () => {
 	const url = process.env.REACT_APP_API_URL;
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
+
+	const [selectedCategory, setSelectedCategory] = useState({});
 
 	const getCategories = async () => {
 		try {
@@ -26,37 +34,48 @@ const Categories = () => {
 
 	useEffect(() => {
 		getCategories();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [setCategories]);
 
 	const editCategory = useCallback(
 		(id) => () => {
 			console.log('edit category', id);
-			/* setTimeout(() => {
-			setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-		  }); */
+		},
+
+		[]
+	);
+
+	const openDeleteModal = useCallback(
+		(category) => () => {
+			console.log('delete category', category.row);
+			setSelectedCategory(category.row)
+			handleOpen();
 		},
 		[]
 	);
 
-	const deleteCategory = useCallback(
-		(id) => () => {
-			console.log('delete category', id);
-			/* setTimeout(() => {
-			setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-		  }); */
-		},
-		[]
-	);
+	 const deleteCategory = async () => {
+		try {
+			await axios.delete(`${url}/admin/categories/${selectedCategory._id}`);
+			handleClose();
+			getCategories();
+		} catch (error) {
+			console.log(error);
+		}
+	 }
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const columns = useMemo(
 		() => [
 			{ field: '_id', headerName: 'ID', width: 250 },
 			{ field: 'name', headerName: 'NAME', width: 200 },
 			{ field: 'slug', headerName: 'SLUG', width: 200 },
 			{ field: 'order', headerName: 'ORDER', width: 200 },
-			{ field: 'createdAt', headerName: 'CREATED AT', type: 'date', width: 200 },
+			{
+				field: 'createdAt',
+				headerName: 'CREATED AT',
+				type: 'date',
+				width: 200,
+			},
 			{
 				field: 'actions',
 				type: 'actions',
@@ -71,13 +90,26 @@ const Categories = () => {
 					<GridActionsCellItem
 						icon={<RiDeleteBin4Line />}
 						label="Delete"
-						onClick={deleteCategory(params.id)}
+						onClick={openDeleteModal(params)}
 					/>,
 				],
 			},
 		],
-		[deleteCategory, editCategory]
+		[openDeleteModal, editCategory]
 	);
+
+	const style = {
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		width: 400,
+		bgcolor: 'background.paper',
+		border: '2px solid #000',
+		boxShadow: 24,
+		p: 4,
+	};
+
 	return (
 		<ViewWrapper>
 			<PageHead
@@ -85,6 +117,20 @@ const Categories = () => {
 				to="/categories/create"
 				buttonText="CREATE CATEGORY"
 			/>
+			<Modal open={open} onClose={handleClose}>
+				<Box sx={style}>
+					<div>Are you sure?!!?</div>
+					<Button
+						variant="contained"
+						color="error"
+						size="small"
+						onClick={deleteCategory}
+						>
+						Delete Category
+					</Button>
+						{selectedCategory.name} CATEGORY ?
+				</Box>
+			</Modal>
 			<TableWrapper>
 				<DataGrid
 					sx={{ border: 0 }}
