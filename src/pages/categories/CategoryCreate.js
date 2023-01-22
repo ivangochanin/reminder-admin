@@ -14,23 +14,23 @@ const CategoryCreate = () => {
 
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
-	const [selectedData, setSelectedData] = useState({
+	const [formData, setFormData] = useState({
 		name: '',
 		slug: '',
 		order: '',
 	});
 
 	const handleData = (e) => {
-		const newData = { ...selectedData };
+		const newData = { ...formData };
 		newData[e.target.name] = e.target.value;
-		setSelectedData(newData);
+		setFormData(newData);
 	};
 
 	const createReminder = async (e) => {
 		e.preventDefault();
 		try {
 			setLoading(true);
-			await axios.post(`${url}/admin/categories`, selectedData);
+			await axios.post(`${url}/admin/categories`, formData);
 			// when fetch is done go back to home page - do not need success message - if success than redirect
 			navigate('/categories');
 		} catch (error) {
@@ -58,7 +58,7 @@ const CategoryCreate = () => {
 						label="Name"
 						variant="standard"
 						fullWidth
-						value={selectedData.name || ''}
+						value={formData.name || ''}
 						onChange={(e) => handleData(e)}
 					/>
 					<TextField
@@ -71,7 +71,7 @@ const CategoryCreate = () => {
 						label="Slug"
 						variant="standard"
 						fullWidth
-						value={selectedData.slug || ''}
+						value={formData.slug || ''}
 						onChange={(e) => handleData(e)}
 					/>
 					<TextField
@@ -83,7 +83,7 @@ const CategoryCreate = () => {
 						label="Order"
 						variant="standard"
 						fullWidth
-						value={selectedData.order || ''}
+						value={formData.order || ''}
 						onChange={(e) => handleData(e)}
 					/>
 				</InputWrapper>
