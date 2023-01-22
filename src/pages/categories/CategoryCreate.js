@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
 import PageHead from '../../components/common/wrappers/PageHead';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
-import { transition, color } from '../../configs/utilities';
+import { color } from '../../configs/utilities';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const CategoryCreate = () => {
 	const url = process.env.REACT_APP_API_URL;
+	const navigate = useNavigate();
 
+	const [loading, setLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const [selectedData, setSelectedData] = useState({
 		name: '',
 		slug: '',
 		order: '',
 	});
-
-	const [loading, setLoading] = useState(false);
-	const [successMessage, setSuccessMessage] = useState('');
-	const [errorMessage, setErrorMessage] = useState('');
-	const [errors, setErrors] = useState({});
 
 	const handleData = (e) => {
 		const newData = { ...selectedData };
@@ -26,45 +26,16 @@ const CategoryCreate = () => {
 		setSelectedData(newData);
 	};
 
-	// Run only when we have errors
-	useEffect(() => {
-		if (loading) {
-			createReminder();
-			alert('Success');
-			setLoading(false);
-
-			// if we do not have any errors than create note
-			/* if (Object.keys(errors).length === 0) {
-				createReminder();
-				alert('Success')
-			} else {
-				setLoading(false);
-			} */
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [errors]);
-
 	const createReminder = async (e) => {
 		e.preventDefault();
-		setLoading(true);
 		try {
-			// fetch - second arg - pass object to add props to post request
-			/* await fetch(`${url}/admin/categories`, {
-				method: 'POST',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-				},
-				// in body pass form state
-				body: JSON.stringify(selectedData),
-			}); */
-			await axios.post(`${url}/admin/categories`, selectedData)
-			setSuccessMessage('success');
-			// when fetch is done go back to home page
+			setLoading(true);
+			await axios.post(`${url}/admin/categories`, selectedData);
+			// when fetch is done go back to home page - do not need success message - if success than redirect
+			navigate('/categories');
 		} catch (error) {
-			console.log(error);
-			setErrorMessage('error message from create');
-			setErrors()
+			setLoading(false);
+			setErrorMessage(error.response.data.msg.message);
 		}
 	};
 
@@ -123,14 +94,12 @@ const CategoryCreate = () => {
 						type="submit"
 						color="primary"
 						size="large"
+						disabled={loading}
 					>
 						Create Category
 					</Button>
 				</ButtonWrapper>
 				<MessageBox>
-					<MessageSuccess>
-						{successMessage ? successMessage : ''}
-					</MessageSuccess>
 					<MessageError>{errorMessage ? errorMessage : ''}</MessageError>
 				</MessageBox>
 			</Form>
@@ -164,9 +133,6 @@ const MessageBox = styled.div`
 	font-size: 16px;
 	text-align: center;
 `;
-const MessageSuccess = styled.span`
-	color: ${color.blue};
-`;
 
 const MessageError = styled.span`
 	color: ${color.red};
@@ -174,24 +140,4 @@ const MessageError = styled.span`
 
 const ButtonWrapper = styled.div`
 	padding-top: 20px;
-`;
-
-const Button = styled.button`
-	padding: 15px 20px;
-	text-transform: uppercase;
-	font-weight: 500;
-	font-size: 18px;
-	line-height: 22px;
-	border-radius: 4px;
-	color: ${color.white};
-	background: ${color.blue};
-	outline: none;
-	border: none;
-	cursor: pointer;
-	transition: ${transition.default};
-	@media (hover: hover) {
-		&:hover {
-			opacity: 0.9;
-		}
-	}
 `;
