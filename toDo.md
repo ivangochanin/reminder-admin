@@ -1,8 +1,4 @@
-### Backend
-
-
-### Front
-
-> Edit
-- axios - edit route on backend
-- send edited data - same as create but with id
+- table style
+- slug - lowercase & no whitespace
+- format date
+- mongoose - join two collections

@@ -10,14 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
 const CategoryEdit = () => {
-	const { id } = useParams();
-	const url = process.env.REACT_APP_API_URL;
-	/* const [selectedCategory, setSelectedCategory] = useState({
-		name: '',
-		slug: '',
-		order: '',
-	}); */
 
+	const url = process.env.REACT_APP_API_URL;
 	const [loading, setLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [formData, setFormData] = useState({
@@ -25,13 +19,13 @@ const CategoryEdit = () => {
 		slug: '',
 		order: '',
 	});
-
+	
 	const navigate = useNavigate();
+	const { id } = useParams();
 
 	const getCategory = async () => {
 		try {
 			const response = await axios.get(`${url}/admin/categories/${id}`);
-			console.log(response.data);
 			setFormData(response.data.getSingleCategory);
 		} catch (error) {
 			console.log(error);
@@ -48,7 +42,6 @@ const CategoryEdit = () => {
 		try {
 			setLoading(true);
 			await axios.patch(`${url}/admin/categories/${formData._id}`, formData);
-			// when fetch is done go back to home page - do not need success message - if success than redirect
 			navigate('/categories');
 		} catch (error) {
 			setLoading(false);
