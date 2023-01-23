@@ -71,7 +71,7 @@ function App() {
 								exact={true}
 							/>
 							<Route
-								path="/subcategories/edit"
+								path="/subcategories/:id/edit"
 								element={<SubCategoriesEdit />}
 								exact={true}
 							/>

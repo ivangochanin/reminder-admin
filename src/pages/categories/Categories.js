@@ -71,10 +71,14 @@ const Categories = () => {
 
 	const columns = useMemo(
 		() => [
-			{ field: '_id', headerName: 'ID', width: 250 },
-			{ field: 'name', headerName: 'NAME', width: 200 },
+			{ field: 'name', headerName: 'NAME', renderCell: (params) => (
+				<strong>
+				  {params.row.name}
+				</strong>
+			  ), width: 200 },
 			{ field: 'slug', headerName: 'SLUG', width: 200 },
 			{ field: 'order', headerName: 'ORDER', width: 200 },
+			{ field: '_id', headerName: 'ID', width: 250 },
 			{
 				field: 'createdAt',
 				headerName: 'CREATED AT',

@@ -2,5 +2,4 @@
 - slug - lowercase & no whitespace
 - format date
 - create subcategory
-- delete subcategory
 - edit subcategory

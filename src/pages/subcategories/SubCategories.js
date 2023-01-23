@@ -29,7 +29,6 @@ const SubCategories = () => {
 			const response = await axios.get(`${url}/admin/subcategories`);
 			setSubCategories(response.data.allSubCategories);
 			setLoading(false);
-			console.log(response.data.allSubCategories);
 		} catch (error) {
 			console.log(error);
 			setLoading(false);
@@ -43,8 +42,6 @@ const SubCategories = () => {
 
 	const editSubCategory = useCallback(
 		(id) => () => {
-			/* console.log('edit category', id); */
-			// Use useNavigate for programmatic navigation to the clicked route with id
 			navigate(`/subcategories/${id}/edit`);
 		},
 		[navigate]
@@ -52,7 +49,6 @@ const SubCategories = () => {
 
 	const openDeleteModal = useCallback(
 		(subCategory) => () => {
-			/* console.log('delete category', category.row); */
 			setSelectedSubCategory(subCategory.row)
 			handleOpen();
 		},
@@ -61,7 +57,7 @@ const SubCategories = () => {
 
 	 const deleteSubCategory = async () => {
 		try {
-			await axios.delete(`${url}/admin/categories/${selectedSubCategory._id}`);
+			await axios.delete(`${url}/admin/subcategories/${selectedSubCategory._id}`);
 			handleClose();
 			getSubCategories();
 		} catch (error) {
@@ -72,7 +68,13 @@ const SubCategories = () => {
 	const columns = useMemo(
 		() => [
 			
-			{ field: 'name', headerName: 'NAME', width: 200 },
+			{ field: 'name', headerName: 'NAME', 
+			renderCell: (params) => (
+				<strong>
+				  {params.row.name}
+				</strong>
+			  ),
+			width: 200 },
 			{
 				field: 'category',
 				headerName: 'CATEGORY',
@@ -81,10 +83,11 @@ const SubCategories = () => {
 					{params.row.category.name}
 				  </strong>
 				),
+				width: 200
 			  },
 			
 			{ field: 'order', headerName: 'ORDER', width: 100 },
-			{ field: 'slug', headerName: 'SLUG', width: 200 },
+			{ field: 'slug', headerName: 'SLUG', width: 100 },
 			{ field: '_id', headerName: 'ID', width: 250 },
 			{
 				field: 'createdAt',
@@ -132,6 +135,7 @@ const SubCategories = () => {
 				to="/subcategories/create"
 				buttonText="CREATE SUBCATEGORY"
 			/>
+			
 			<Modal open={open} onClose={handleClose}>
 				<Box sx={style}>
 					<div>Are you sure?!!?</div>
