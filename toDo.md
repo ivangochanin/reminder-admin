@@ -1,4 +1,6 @@
 - table style
 - slug - lowercase & no whitespace
 - format date
-- mongoose - join two collections
+- create subcategory
+- delete subcategory
+- edit subcategory
