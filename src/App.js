@@ -82,7 +82,7 @@ function App() {
 								exact={true}
 							/>
 							<Route
-								path="/reminders/edit"
+								path="/reminders/:id/edit"
 								element={<RemindersEdit />}
 								exact={true}
 							/>
