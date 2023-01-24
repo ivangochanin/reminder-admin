@@ -119,7 +119,7 @@ const SubCategoryEdit = () => {
 						color="info"
 						disabled={loading}
 						required
-						label="Name"
+						label="NAME"
 						variant="standard"
 						fullWidth
 						value={formData.name || ''}
@@ -132,7 +132,7 @@ const SubCategoryEdit = () => {
 						color="info"
 						disabled={loading}
 						required
-						label="Slug"
+						label="SLUG"
 						variant="standard"
 						fullWidth
 						value={formData.slug || ''}
@@ -144,7 +144,7 @@ const SubCategoryEdit = () => {
 						size="medium"
 						color="info"
 						disabled={loading}
-						label="Order"
+						label="ORDER"
 						variant="standard"
 						fullWidth
 						value={formData.order || ''}
