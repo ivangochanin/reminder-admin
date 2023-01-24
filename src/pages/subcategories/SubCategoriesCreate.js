@@ -23,6 +23,7 @@ const SubCategoriesCreate = () => {
 		category: '',
 		slug: '',
 		order: '',
+		reminders: []
 	});
 	const [categories, setCategories] = useState([]);
 
