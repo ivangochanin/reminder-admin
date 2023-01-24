@@ -142,7 +142,7 @@ const SubCategoriesCreate = () => {
 						size="large"
 						disabled={loading}
 					>
-						Create Category
+						Create SubCategory
 					</Button>
 				</ButtonWrapper>
 				<MessageBox>
