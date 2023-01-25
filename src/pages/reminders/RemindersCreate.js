@@ -23,6 +23,7 @@ const RemindersCreate = () => {
 		subcategory: '',
 		slug: '',
 		order: '',
+		content: '',
 		reminders: []
 	});
 	const [categories, setCategories] = useState([]);
@@ -40,10 +41,10 @@ const RemindersCreate = () => {
 		}
 	};
 
-	const getSubCategories = async () => {
+	const getSubCategories = async (categoryId) => {
 		try {
 			setLoading(true);
-			const response = await axios.get(`${url}/admin/subCategories`);
+			const response = await axios.get(`${url}/admin/subcategories/subcategories-by-category/${categoryId}`);
 			setSubCategories(response.data.allSubCategories);
 			setLoading(false);
 		} catch (error) {
@@ -54,7 +55,7 @@ const RemindersCreate = () => {
 
 	useEffect(() => {
 		getCategories();
-		getSubCategories();
+		// getSubCategories();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -63,6 +64,11 @@ const RemindersCreate = () => {
 		newData[e.target.name] = e.target.value;
 		setFormData(newData);
 	};
+
+	const handleCategories = async (e) => {
+		await getSubCategories(e.target.value)
+		handleData(e)
+	}
 
 	const createReminder = async (e) => {
 		e.preventDefault();
@@ -97,7 +103,7 @@ const RemindersCreate = () => {
 								id: 'uncontrolled-native',
 							}}
 							value={formData.category || ''}
-							onChange={(e) => handleData(e)}
+							onChange={(e) => handleCategories(e)}
 							label="SUBCATEGORY"
 						>
 							{categories.map((category) => {
@@ -170,6 +176,17 @@ const RemindersCreate = () => {
 						variant="standard"
 						fullWidth
 						value={formData.order || ''}
+						onChange={(e) => handleData(e)}
+					/>
+					<TextField
+						name="content"
+						size="medium"
+						color="info"
+						disabled={loading}
+						label="CkEditor 5"
+						variant="standard"
+						fullWidth
+						value={formData.content || ''}
 						onChange={(e) => handleData(e)}
 					/>
 				</InputWrapper>
