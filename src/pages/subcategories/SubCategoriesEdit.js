@@ -40,11 +40,6 @@ const SubCategoryEdit = () => {
 		}
 	};
 
-	useEffect(() => {
-		getCategories();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	const getSubCategory = async () => {
 		try {
 			const response = await axios.get(`${url}/admin/subcategories/${id}`);
@@ -55,6 +50,7 @@ const SubCategoryEdit = () => {
 	};
 
 	useEffect(() => {
+		getCategories();
 		getSubCategory();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
