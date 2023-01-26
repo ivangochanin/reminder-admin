@@ -42,7 +42,6 @@ const Categories = () => {
 
 	const editCategory = useCallback(
 		(id) => () => {
-			/* console.log('edit category', id); */
 			// Use useNavigate for programmatic navigation to the clicked route with id
 			navigate(`/categories/${id}/edit`);
 		},
@@ -52,7 +51,6 @@ const Categories = () => {
 
 	const openDeleteModal = useCallback(
 		(category) => () => {
-			/* console.log('delete category', category.row); */
 			setSelectedCategory(category.row)
 			handleOpen();
 		},

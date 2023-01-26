@@ -1,5 +1,6 @@
+- add image to quill
 - table style
 - slug - lowercase & no whitespace
 - format date
-- create subcategory
-- edit subcategory
+- edit/delete icons
+- mobile friendly

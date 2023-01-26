@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { color } from '../../configs/utilities';
 import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
+import axios from 'axios';
 import PageHead from '../../components/common/wrappers/PageHead';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
-import { color } from '../../configs/utilities';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { useParams } from 'react-router-dom';
-import {quillModules} from "../../configs/quill";
 import ReactQuill from 'react-quill';
+import { quillModules } from '../../configs/quill';
 import 'react-quill/dist/quill.snow.css';
 
 const RemindersEdit = () => {
@@ -47,7 +46,7 @@ const RemindersEdit = () => {
 				},
 			});
 
-			return data
+			return data;
 		} catch (error) {
 			console.log(error);
 		}
@@ -55,42 +54,37 @@ const RemindersEdit = () => {
 
 	const getCategories = async () => {
 		try {
-
 			const response = await axios.get(`${url}/admin/categories`);
 			setCategories(response.data.allCategories);
-
 		} catch (error) {
 			console.log(error);
-
 		}
 	};
 
 	const getSubCategories = async (categoryId) => {
-		console.log('getSub', categoryId);
 		try {
 			const response = await axios.get(
 				`${url}/admin/subcategories/subcategories-by-category/${categoryId}`
 			);
-			console.log(response);
 			setSubCategories(response.data.allSubCategories);
-			return response
+			return response;
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
 	const getAllData = async () => {
-		setLoading(true)
+		setLoading(true);
 		await getCategories();
 		const reminder = await getReminder();
 
-		return reminder
+		return reminder;
 	};
 
 	useEffect(() => {
-		getAllData().then(({getSingleReminder}) => {
-			getSubCategories(getSingleReminder.subcategory.category).then(res => {
-				setLoading(false)
+		getAllData().then(({ getSingleReminder }) => {
+			getSubCategories(getSingleReminder.subcategory.category).then((res) => {
+				setLoading(false);
 			});
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,19 +96,16 @@ const RemindersEdit = () => {
 		setFormData(newData);
 	};
 
-	const handleContent = (value) => {
-		const newData = { ...formData };
-		newData.content = value
-		setFormData(newData)
-	}
-
 	const handleCategories = async (e) => {
-		console.log(e.target.value);
 		await getSubCategories(e.target.value);
 		handleData(e);
 	};
 
-	const createReminder = async (e) => {
+	const handleContent = (value) => {
+		formData.content = value;
+	};
+
+	const editReminder = async (e) => {
 		e.preventDefault();
 		try {
 			setLoading(true);
@@ -132,11 +123,10 @@ const RemindersEdit = () => {
 				to="/reminders"
 				buttonText="SEE ALL REMINDERS"
 			/>
-			<Form onSubmit={(e) => createReminder(e)}>
+			<Form onSubmit={(e) => editReminder(e)}>
 				<InputWrapper>
 					<FormControl fullWidth variant="standard">
 						<InputLabel id="uncontrolled-native">CATEGORY</InputLabel>
-
 						<Select
 							inputProps={{
 								name: 'category',
@@ -160,29 +150,28 @@ const RemindersEdit = () => {
 					</FormControl>
 					<FormControl fullWidth variant="standard">
 						<InputLabel id="uncontrolled-native">SUBCATEGORY</InputLabel>
-						{!loading &&
-						<Select
-						inputProps={{
-							name: 'subcategory',
-							type: 'text',
-							size: 'medium',
-							color: 'info',
-							id: 'uncontrolled-native',
-						}}
-						value={formData.subcategory || ''}
-						onChange={(e) => handleData(e)}
-						label="SUBCATEGORY"
-						>
-							{subCategories.map((subCategory) => {
-								return (
-									<MenuItem key={subCategory._id} value={subCategory._id}>
-										{subCategory.name}
-									</MenuItem>
-								);
-							})}
-						</Select>
-						}
-
+						{!loading && (
+							<Select
+								inputProps={{
+									name: 'subcategory',
+									type: 'text',
+									size: 'medium',
+									color: 'info',
+									id: 'uncontrolled-native',
+								}}
+								value={formData.subcategory || ''}
+								onChange={(e) => handleData(e)}
+								label="SUBCATEGORY"
+							>
+								{subCategories.map((subCategory) => {
+									return (
+										<MenuItem key={subCategory._id} value={subCategory._id}>
+											{subCategory.name}
+										</MenuItem>
+									);
+								})}
+							</Select>
+						)}
 					</FormControl>
 					<TextField
 						name="name"
@@ -224,13 +213,14 @@ const RemindersEdit = () => {
 					/>
 				</InputWrapper>
 
-				<div >
+				<div>
 					<ReactQuill
-						style={{width: '800px'}}
+						style={{ width: '800px' }}
 						theme="snow"
 						value={formData.content}
 						onChange={(value) => handleContent(value)}
-						modules={quillModules}/>
+						modules={quillModules}
+					/>
 				</div>
 
 				<ButtonWrapper>
@@ -241,7 +231,7 @@ const RemindersEdit = () => {
 						size="large"
 						disabled={loading}
 					>
-						Create Reminder
+						Edit Reminder
 					</Button>
 				</ButtonWrapper>
 				<MessageBox>
