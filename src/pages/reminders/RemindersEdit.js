@@ -12,6 +12,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { useParams } from 'react-router-dom';
+import {quillModules} from "../../configs/quill";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const RemindersEdit = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -52,13 +55,13 @@ const RemindersEdit = () => {
 
 	const getCategories = async () => {
 		try {
-			
+
 			const response = await axios.get(`${url}/admin/categories`);
 			setCategories(response.data.allCategories);
-			
+
 		} catch (error) {
 			console.log(error);
-			
+
 		}
 	};
 
@@ -98,6 +101,12 @@ const RemindersEdit = () => {
 		newData[e.target.name] = e.target.value;
 		setFormData(newData);
 	};
+
+	const handleContent = (value) => {
+		const newData = { ...formData };
+		newData.content = value
+		setFormData(newData)
+	}
 
 	const handleCategories = async (e) => {
 		console.log(e.target.value);
@@ -151,7 +160,7 @@ const RemindersEdit = () => {
 					</FormControl>
 					<FormControl fullWidth variant="standard">
 						<InputLabel id="uncontrolled-native">SUBCATEGORY</InputLabel>
-						{!loading && 
+						{!loading &&
 						<Select
 						inputProps={{
 							name: 'subcategory',
@@ -173,7 +182,7 @@ const RemindersEdit = () => {
 							})}
 						</Select>
 						}
-					
+
 					</FormControl>
 					<TextField
 						name="name"
@@ -213,18 +222,16 @@ const RemindersEdit = () => {
 						value={formData.order || ''}
 						onChange={(e) => handleData(e)}
 					/>
-					<TextField
-						name="content"
-						size="medium"
-						color="info"
-						disabled={loading}
-						label="CkEditor 5"
-						variant="standard"
-						fullWidth
-						value={formData.content || ''}
-						onChange={(e) => handleData(e)}
-					/>
 				</InputWrapper>
+
+				<div >
+					<ReactQuill
+						style={{width: '800px'}}
+						theme="snow"
+						value={formData.content}
+						onChange={(value) => handleContent(value)}
+						modules={quillModules}/>
+				</div>
 
 				<ButtonWrapper>
 					<Button
