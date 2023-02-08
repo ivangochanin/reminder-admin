@@ -80,7 +80,7 @@ const Reminders = () => {
 				headerName: 'SUBCATEGORY',
 				renderCell: (params) => (
 				  <strong>
-					{params.row.subcategory.name}
+					{params.row.subcategory?.name}
 				  </strong>
 				),
 				width: 200
