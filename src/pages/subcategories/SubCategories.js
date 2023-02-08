@@ -80,7 +80,8 @@ const SubCategories = () => {
 				headerName: 'CATEGORY',
 				renderCell: (params) => (
 				  <strong>
-					{params.row.category.name}
+					{/* Optional chaining operator - If category.name exists */}
+					{params.row.category?.name}
 				  </strong>
 				),
 				width: 200
