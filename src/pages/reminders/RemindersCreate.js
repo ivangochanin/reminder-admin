@@ -11,9 +11,10 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import {quillModules} from "../../configs/quill";
+import { quillModules } from '../../configs/quill';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { language } from '../../configs/language';
 
 const RemindersCreate = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -26,8 +27,9 @@ const RemindersCreate = () => {
 		subcategory: '',
 		slug: '',
 		order: '',
+		language: '',
 		content: '',
-		reminders: []
+		reminders: [],
 	});
 	const [categories, setCategories] = useState([]);
 	const [subCategories, setSubCategories] = useState([]);
@@ -47,7 +49,9 @@ const RemindersCreate = () => {
 	const getSubCategories = async (categoryId) => {
 		try {
 			setLoading(true);
-			const response = await axios.get(`${url}/admin/subcategories/subcategories-by-category/${categoryId}`);
+			const response = await axios.get(
+				`${url}/admin/subcategories/subcategories-by-category/${categoryId}`
+			);
 			setSubCategories(response.data.allSubCategories);
 			setLoading(false);
 		} catch (error) {
@@ -70,14 +74,14 @@ const RemindersCreate = () => {
 
 	const handleContent = (value) => {
 		const newData = { ...formData };
-		newData.content = value
-		setFormData(newData)
-	}
+		newData.content = value;
+		setFormData(newData);
+	};
 
 	const handleCategories = async (e) => {
-		await getSubCategories(e.target.value)
-		handleData(e)
-	}
+		await getSubCategories(e.target.value);
+		handleData(e);
+	};
 
 	const createReminder = async (e) => {
 		e.preventDefault();
@@ -90,6 +94,8 @@ const RemindersCreate = () => {
 			setErrorMessage(error.response.data.msg.message);
 		}
 	};
+	console.log(language);
+
 	return (
 		<ViewWrapper>
 			<PageHead
@@ -99,10 +105,8 @@ const RemindersCreate = () => {
 			/>
 			<Form onSubmit={(e) => createReminder(e)}>
 				<InputWrapper>
-				<FormControl fullWidth variant="standard">
-						<InputLabel id="uncontrolled-native">
-							CATEGORY
-						</InputLabel>
+					<FormControl fullWidth variant="standard">
+						<InputLabel id="uncontrolled-native">CATEGORY</InputLabel>
 						<Select
 							inputProps={{
 								name: 'category',
@@ -125,9 +129,7 @@ const RemindersCreate = () => {
 						</Select>
 					</FormControl>
 					<FormControl fullWidth variant="standard">
-						<InputLabel id="uncontrolled-native">
-							SUBCATEGORY
-						</InputLabel>
+						<InputLabel id="uncontrolled-native">SUBCATEGORY</InputLabel>
 						<Select
 							inputProps={{
 								name: 'subcategory',
@@ -187,15 +189,38 @@ const RemindersCreate = () => {
 						value={formData.order || ''}
 						onChange={(e) => handleData(e)}
 					/>
-
+					<FormControl fullWidth variant="standard">
+						<InputLabel id="uncontrolled-native">LANGUAGE</InputLabel>
+						<Select
+							inputProps={{
+								name: 'language',
+								type: 'text',
+								size: 'medium',
+								color: 'info',
+								id: 'uncontrolled-native',
+							}}
+							value={formData.language || ''}
+							onChange={(e) => handleData(e)}
+							label="LANGUAGE"
+						>
+							{language.map((language, index) => {
+								return (
+									<MenuItem key={index} value={language}>
+										{language}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</FormControl>
 				</InputWrapper>
-				<div >
+				<div>
 					<ReactQuill
-						style={{width: '800px'}}
+						style={{ width: '800px' }}
 						theme="snow"
 						value={formData.content}
 						onChange={(value) => handleContent(value)}
-						modules={quillModules}/>
+						modules={quillModules}
+					/>
 				</div>
 				<ButtonWrapper>
 					<Button

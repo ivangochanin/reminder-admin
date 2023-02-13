@@ -1,0 +1,1 @@
+export const language = ['html', 'css', 'javascript', 'typescript', 'json', 'graphql']

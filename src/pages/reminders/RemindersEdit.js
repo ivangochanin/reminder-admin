@@ -14,6 +14,7 @@ import Select from '@mui/material/Select';
 import ReactQuill from 'react-quill';
 import { quillModules } from '../../configs/quill';
 import 'react-quill/dist/quill.snow.css';
+import { language } from '../../configs/language';
 
 const RemindersEdit = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -27,6 +28,7 @@ const RemindersEdit = () => {
 		subcategory: '',
 		slug: '',
 		order: '',
+		language: '',
 		content: '',
 		reminders: [],
 	});
@@ -211,6 +213,29 @@ const RemindersEdit = () => {
 						value={formData.order || ''}
 						onChange={(e) => handleData(e)}
 					/>
+					<FormControl fullWidth variant="standard">
+						<InputLabel id="uncontrolled-native">LANGUAGE</InputLabel>
+						<Select
+							inputProps={{
+								name: 'language',
+								type: 'text',
+								size: 'medium',
+								color: 'info',
+								id: 'uncontrolled-native',
+							}}
+							value={formData.language || ''}
+							onChange={(e) => handleData(e)}
+							label="LANGUAGE"
+						>
+							{language.map((language, index) => {
+								return (
+									<MenuItem key={index} value={language}>
+										{language}
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</FormControl>
 				</InputWrapper>
 
 				<div>
