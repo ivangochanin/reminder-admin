@@ -15,7 +15,7 @@ export default Footer;
 const Wrapper = styled.div`
 	width: 100%;
 	background: ${color.silver};
-	color: ${color.blue};
+	color: ${color.black};
 `;
 
 const Content = styled.div`

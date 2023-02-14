@@ -21,8 +21,8 @@ const ButtonStyle = styled.span`
 	justify-content: center;
 	align-items: center;
 	background: ${color.white};
-	color: ${color.blue};
-	border: 1px solid ${color.blue};
+	color: ${color.black};
+	border: 1px solid ${color.black};
 	font-size: 14px;
 	font-weight: 700;
 	letter-spacing: 1px;

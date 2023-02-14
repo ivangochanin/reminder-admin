@@ -6,7 +6,7 @@ export const PageTitle = styled.h1`
   font-weight: 500;
   font-size: 24px;
   text-transform: uppercase;
-  color: ${color.blue};
+  color: ${color.black};
 
   @media screen and (min-width: ${breakpoint.xxl}) {
     font-size: 28px;

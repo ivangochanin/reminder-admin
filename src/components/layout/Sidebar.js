@@ -40,7 +40,7 @@ export default Sidebar;
 const Wrapper = styled.div`
 	width: 100%;
 	height: 95vh;
-	background: ${color.blue};
+	background: ${color.black};
     padding: 30px 30px;
   
 .active {

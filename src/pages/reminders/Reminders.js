@@ -10,9 +10,9 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { color } from '../../configs/utilities';
 
 const Reminders = () => {
-
 	const url = process.env.REACT_APP_API_URL;
 	const [reminders, setReminders] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ const Reminders = () => {
 
 	useEffect(() => {
 		getReminders();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const editReminder = useCallback(
@@ -50,13 +50,13 @@ const Reminders = () => {
 
 	const openDeleteModal = useCallback(
 		(reminder) => () => {
-			setSelectedReminder(reminder.row)
+			setSelectedReminder(reminder.row);
 			handleOpen();
 		},
 		[]
 	);
 
-	 const deleteReminder = async () => {
+	const deleteReminder = async () => {
 		try {
 			await axios.delete(`${url}/admin/reminders/${selectedReminder._id}`);
 			handleClose();
@@ -64,31 +64,25 @@ const Reminders = () => {
 		} catch (error) {
 			console.log(error);
 		}
-	 }
+	};
 
 	const columns = useMemo(
 		() => [
-			{ field: 'name', headerName: 'NAME', 
-			renderCell: (params) => (
-				<strong>
-				  {params.row.name}
-				</strong>
-			  ),
-			width: 200 },
+			{ field: 'order', headerName: 'ORDER', width: 100 },
+			{
+				field: 'name',
+				headerName: 'NAME',
+				renderCell: (params) => <strong>{params.row.name}</strong>,
+				width: 200,
+			},
 			{
 				field: 'subcategory',
 				headerName: 'SUBCATEGORY',
-				renderCell: (params) => (
-				  <strong>
-					{params.row.subcategory?.name}
-				  </strong>
-				),
-				width: 200
-			  },
-			
-			{ field: 'order', headerName: 'ORDER', width: 100 },
-			{ field: 'slug', headerName: 'SLUG', width: 100 },
-			{ field: '_id', headerName: 'ID', width: 250 },
+				renderCell: (params) => <strong>{params.row.subcategory?.name}</strong>,
+				width: 200,
+			},
+
+			{ field: 'language', headerName: 'LANGUAGE', width: 100 },
 			{
 				field: 'createdAt',
 				headerName: 'CREATED AT',
@@ -102,12 +96,19 @@ const Reminders = () => {
 				width: 80,
 				getActions: (params) => [
 					<GridActionsCellItem
-						icon={<MdOutlineModeEditOutline />}
+						icon={
+							<MdOutlineModeEditOutline
+								size={'25px'}
+								style={{ color: color.green }}
+							/>
+						}
 						label="Edit"
 						onClick={editReminder(params.id)}
 					/>,
 					<GridActionsCellItem
-						icon={<RiDeleteBin4Line />}
+						icon={
+							<RiDeleteBin4Line size={'25px'} style={{ color: color.red }} />
+						}
 						label="Delete"
 						onClick={openDeleteModal(params)}
 					/>,
@@ -144,10 +145,10 @@ const Reminders = () => {
 						color="error"
 						size="small"
 						onClick={deleteReminder}
-						>
+					>
 						Delete Reminder
 					</Button>
-						{selectedReminder.name} REMINDER ?
+					{selectedReminder.name} REMINDER ?
 				</Box>
 			</Modal>
 			<TableWrapper>
