@@ -1,6 +1,9 @@
+import axios from 'axios';
 import { Quill } from "react-quill";
 import ImageUploader from "quill-image-uploader";
 Quill.register("modules/imageUploader", ImageUploader);
+
+const url = process.env.REACT_APP_API_URL;
 
 const quillModules = {
   toolbar: [
@@ -10,15 +13,21 @@ const quillModules = {
     [{ indent: "-1" }, { indent: "+1" }],
     ["clean", "code-block", "image"]
   ],
-  // toDo - upload file & return image url
+
   imageUploader: {
     upload: file => {
         return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve(
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png"
-            );
-          }, 3500);
+          const formData = new FormData();
+          formData.append("image", file);
+
+          axios.post(`${url}/upload`, formData)
+            .then(response => {
+              resolve(response.data.url)
+            })
+            .catch(error => {
+              reject("Upload failed");
+              console.error("Error:", error);
+            })
         });
       }
     }
