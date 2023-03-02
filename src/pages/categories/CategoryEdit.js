@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
+import  ViewWrapper  from '../../components/common/wrappers/ViewWrapper';
 import PageHead from '../../components/common/wrappers/PageHead';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -134,9 +134,11 @@ const Form = styled.form`
 `;
 
 const InputWrapper = styled.div`
-	width: 100%;
 	display: flex;
-	column-gap: 40px;
+	flex-direction: column;
+    width: 50%;
+	min-width: 300px;
+	row-gap: 40px;
 `;
 
 const MessageBox = styled.div`

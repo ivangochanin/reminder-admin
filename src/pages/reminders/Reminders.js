@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
-import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
+import  ViewWrapper  from '../../components/common/wrappers/ViewWrapper';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import axios from 'axios';
 import PageHead from '../../components/common/wrappers/PageHead';
@@ -93,7 +93,7 @@ const Reminders = () => {
 				field: 'actions',
 				type: 'actions',
 				headerName: 'ACTIONS',
-				width: 80,
+				width: 100,
 				getActions: (params) => [
 					<GridActionsCellItem
 						icon={
@@ -171,4 +171,5 @@ export default Reminders;
 const TableWrapper = styled.div`
 	width: 100%;
 	height: 700px; // table MUST have height prop
+	margin: 0 auto;
 `;

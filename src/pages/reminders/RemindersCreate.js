@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
+import  ViewWrapper  from '../../components/common/wrappers/ViewWrapper';
 import PageHead from '../../components/common/wrappers/PageHead';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
@@ -213,15 +213,14 @@ const RemindersCreate = () => {
 						</Select>
 					</FormControl>
 				</InputWrapper>
-				<div>
+				<WiziwigWrapper>
 					<ReactQuill
-						style={{ width: '800px' }}
 						theme="snow"
 						value={formData.content}
 						onChange={(value) => handleContent(value)}
 						modules={quillModules}
 					/>
-				</div>
+				</WiziwigWrapper>
 				<ButtonWrapper>
 					<Button
 						variant="contained"
@@ -252,9 +251,11 @@ const Form = styled.form`
 `;
 
 const InputWrapper = styled.div`
-	width: 100%;
 	display: flex;
-	column-gap: 40px;
+	flex-direction: column;
+	width: 50%;
+	min-width: 300px;
+	row-gap: 40px;
 `;
 
 const MessageBox = styled.div`
@@ -274,4 +275,12 @@ const MessageError = styled.span`
 
 const ButtonWrapper = styled.div`
 	padding-top: 20px;
+`;
+
+const WiziwigWrapper = styled.div`
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	min-width: 300px;
 `;

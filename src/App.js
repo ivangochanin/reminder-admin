@@ -18,6 +18,8 @@ import Footer from './components/layout/Footer';
 import { showContainer } from './configs/animations';
 import styled from 'styled-components';
 import { LayoutWrapper } from './components/common/wrappers/Wrappers';
+import { breakpoint } from './configs/utilities';
+
 function App() {
 	const [playAnimation, setPlayAnimation] = useState(false);
 	const containerContent = useRef(null);
@@ -46,7 +48,7 @@ function App() {
 						<Sidebar />
 					</SidebarWrapper>
 
-					<ViewsWrapper>
+					<ContentWrapper>
 						<Routes>
 							<Route path="/" element={<Home />} exact={true} />
 							<Route path="/categories" element={<Categories />} exact={true} />
@@ -88,7 +90,7 @@ function App() {
 							/>
 							<Route path="*" element={<Error />} />
 						</Routes>
-					</ViewsWrapper>
+					</ContentWrapper>
 				</AnimationWrapper>
 				<Footer />
 			</LayoutWrapper>
@@ -104,9 +106,16 @@ const AnimationWrapper = styled.div`
 `;
 
 const SidebarWrapper = styled.div`
-	width: 300px;
+	display: none;
+	@media screen and (min-width: ${breakpoint.lg}) {
+		display: block;
+		width: 300px;
+	}
 `;
 
-const ViewsWrapper = styled.div`
-	width: calc(100% - 300px);
+const ContentWrapper = styled.div`
+	width: 100%;
+	@media screen and (min-width: ${breakpoint.lg}) {
+		width: calc(100% - 300px);
+	}
 `;

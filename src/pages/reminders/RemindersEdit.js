@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { color } from '../../configs/utilities';
-import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
+import  ViewWrapper  from '../../components/common/wrappers/ViewWrapper';
 import axios from 'axios';
 import PageHead from '../../components/common/wrappers/PageHead';
 import TextField from '@mui/material/TextField';
@@ -15,6 +15,7 @@ import ReactQuill from 'react-quill';
 import { quillModules } from '../../configs/quill';
 import 'react-quill/dist/quill.snow.css';
 import { language } from '../../configs/language';
+
 
 const RemindersEdit = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -118,6 +119,7 @@ const RemindersEdit = () => {
 			setErrorMessage(error.response.data.msg.message);
 		}
 	};
+
 	return (
 		<ViewWrapper>
 			<PageHead
@@ -238,15 +240,14 @@ const RemindersEdit = () => {
 					</FormControl>
 				</InputWrapper>
 
-				<div>
+				<WiziwigWrapper>
 					<ReactQuill
-						style={{ width: '800px' }}
 						theme="snow"
 						value={formData.content}
 						onChange={(value) => handleContent(value)}
 						modules={quillModules}
 					/>
-				</div>
+				</WiziwigWrapper>
 
 				<ButtonWrapper>
 					<Button
@@ -278,9 +279,11 @@ const Form = styled.form`
 `;
 
 const InputWrapper = styled.div`
-	width: 100%;
 	display: flex;
-	column-gap: 40px;
+	flex-direction: column;
+	width: 50%;
+	min-width: 300px;
+	row-gap: 40px;
 `;
 
 const MessageBox = styled.div`
@@ -300,4 +303,12 @@ const MessageError = styled.span`
 
 const ButtonWrapper = styled.div`
 	padding-top: 20px;
+`;
+
+const WiziwigWrapper = styled.div`
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	min-width: 300px;
 `;

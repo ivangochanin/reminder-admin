@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
-import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
+import  ViewWrapper  from '../../components/common/wrappers/ViewWrapper';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import axios from 'axios';
 import PageHead from '../../components/common/wrappers/PageHead';
@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { color } from '../../configs/utilities';
 
 const Categories = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -37,7 +38,7 @@ const Categories = () => {
 
 	useEffect(() => {
 		getCategories();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const editCategory = useCallback(
@@ -51,13 +52,13 @@ const Categories = () => {
 
 	const openDeleteModal = useCallback(
 		(category) => () => {
-			setSelectedCategory(category.row)
+			setSelectedCategory(category.row);
 			handleOpen();
 		},
 		[]
 	);
 
-	 const deleteCategory = async () => {
+	const deleteCategory = async () => {
 		try {
 			await axios.delete(`${url}/admin/categories/${selectedCategory._id}`);
 			handleClose();
@@ -65,15 +66,16 @@ const Categories = () => {
 		} catch (error) {
 			console.log(error);
 		}
-	 }
+	};
 
 	const columns = useMemo(
 		() => [
-			{ field: 'name', headerName: 'NAME', renderCell: (params) => (
-				<strong>
-				  {params.row.name}
-				</strong>
-			  ), width: 200 },
+			{
+				field: 'name',
+				headerName: 'NAME',
+				renderCell: (params) => <strong>{params.row.name}</strong>,
+				width: 200,
+			},
 			{ field: 'slug', headerName: 'SLUG', width: 200 },
 			{ field: 'order', headerName: 'ORDER', width: 200 },
 			{ field: '_id', headerName: 'ID', width: 250 },
@@ -87,15 +89,22 @@ const Categories = () => {
 				field: 'actions',
 				type: 'actions',
 				headerName: 'ACTIONS',
-				width: 80,
+				width: 100,
 				getActions: (params) => [
 					<GridActionsCellItem
-						icon={<MdOutlineModeEditOutline />}
+						icon={
+							<MdOutlineModeEditOutline
+								size={'25px'}
+								style={{ color: color.green }}
+							/>
+						}
 						label="Edit"
 						onClick={editCategory(params.id)}
 					/>,
 					<GridActionsCellItem
-						icon={<RiDeleteBin4Line />}
+						icon={
+							<RiDeleteBin4Line size={'25px'} style={{ color: color.red }} />
+						}
 						label="Delete"
 						onClick={openDeleteModal(params)}
 					/>,
@@ -132,10 +141,10 @@ const Categories = () => {
 						color="error"
 						size="small"
 						onClick={deleteCategory}
-						>
+					>
 						Delete Category
 					</Button>
-						{selectedCategory.name} CATEGORY ?
+					{selectedCategory.name} CATEGORY ?
 				</Box>
 			</Modal>
 			<TableWrapper>
@@ -158,4 +167,5 @@ export default Categories;
 const TableWrapper = styled.div`
 	width: 100%;
 	height: 700px; // table MUST have height prop
+	margin: 0 auto;
 `;

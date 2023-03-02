@@ -5,8 +5,3 @@ export const LayoutWrapper = styled.div`
 	margin: 0 auto;
 `;
 
-export const ViewWrapper = styled.div`
-	height: 95vh;
-	overflow-x: auto;
-	padding: 10vh 50px 50px;
-`;

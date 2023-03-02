@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
-import { ViewWrapper } from '../../components/common/wrappers/Wrappers';
+import  ViewWrapper  from '../../components/common/wrappers/ViewWrapper';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import axios from 'axios';
 import PageHead from '../../components/common/wrappers/PageHead';
@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { color } from '../../configs/utilities';
 
 const SubCategories = () => {
 	const url = process.env.REACT_APP_API_URL;
@@ -37,7 +38,7 @@ const SubCategories = () => {
 
 	useEffect(() => {
 		getSubCategories();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const editSubCategory = useCallback(
@@ -49,44 +50,44 @@ const SubCategories = () => {
 
 	const openDeleteModal = useCallback(
 		(subCategory) => () => {
-			setSelectedSubCategory(subCategory.row)
+			setSelectedSubCategory(subCategory.row);
 			handleOpen();
 		},
 		[]
 	);
 
-	 const deleteSubCategory = async () => {
+	const deleteSubCategory = async () => {
 		try {
-			await axios.delete(`${url}/admin/subcategories/${selectedSubCategory._id}`);
+			await axios.delete(
+				`${url}/admin/subcategories/${selectedSubCategory._id}`
+			);
 			handleClose();
 			getSubCategories();
 		} catch (error) {
 			console.log(error);
 		}
-	 }
+	};
 
 	const columns = useMemo(
 		() => [
-			
-			{ field: 'name', headerName: 'NAME', 
-			renderCell: (params) => (
-				<strong>
-				  {params.row.name}
-				</strong>
-			  ),
-			width: 200 },
+			{
+				field: 'name',
+				headerName: 'NAME',
+				renderCell: (params) => <strong>{params.row.name}</strong>,
+				width: 200,
+			},
 			{
 				field: 'category',
 				headerName: 'CATEGORY',
 				renderCell: (params) => (
-				  <strong>
-					{/* Optional chaining operator - If category.name exists */}
-					{params.row.category?.name}
-				  </strong>
+					<strong>
+						{/* Optional chaining operator - If category.name exists */}
+						{params.row.category?.name}
+					</strong>
 				),
-				width: 200
-			  },
-			
+				width: 200,
+			},
+
 			{ field: 'order', headerName: 'ORDER', width: 100 },
 			{ field: 'slug', headerName: 'SLUG', width: 100 },
 			{ field: '_id', headerName: 'ID', width: 250 },
@@ -100,15 +101,22 @@ const SubCategories = () => {
 				field: 'actions',
 				type: 'actions',
 				headerName: 'ACTIONS',
-				width: 80,
+				width: 100,
 				getActions: (params) => [
 					<GridActionsCellItem
-						icon={<MdOutlineModeEditOutline />}
+						icon={
+							<MdOutlineModeEditOutline
+								size={'25px'}
+								style={{ color: color.green }}
+							/>
+						}
 						label="Edit"
 						onClick={editSubCategory(params.id)}
 					/>,
 					<GridActionsCellItem
-						icon={<RiDeleteBin4Line />}
+						icon={
+							<RiDeleteBin4Line size={'25px'} style={{ color: color.red }} />
+						}
 						label="Delete"
 						onClick={openDeleteModal(params)}
 					/>,
@@ -136,7 +144,7 @@ const SubCategories = () => {
 				to="/subcategories/create"
 				buttonText="CREATE SUBCATEGORY"
 			/>
-			
+
 			<Modal open={open} onClose={handleClose}>
 				<Box sx={style}>
 					<div>Are you sure?!!?</div>
@@ -145,10 +153,10 @@ const SubCategories = () => {
 						color="error"
 						size="small"
 						onClick={deleteSubCategory}
-						>
+					>
 						Delete SubCategory
 					</Button>
-						{selectedSubCategory.name} SUBCATEGORY ?
+					{selectedSubCategory.name} SUBCATEGORY ?
 				</Box>
 			</Modal>
 			<TableWrapper>
@@ -171,4 +179,5 @@ export default SubCategories;
 const TableWrapper = styled.div`
 	width: 100%;
 	height: 700px; // table MUST have height prop
+	margin: 0 auto;
 `;
