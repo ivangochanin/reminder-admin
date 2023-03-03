@@ -18,15 +18,12 @@ const Home = () => {
 						to="/reminders"
 						buttonText="SEE ALL REMINDERS"
 					/>
-					<ul>
+				{/* 	<ul>
 					 <h3>To do: </h3>
 						<li>Data Grid Visualization</li>
-						<li>Charts</li>
-						<li>Popular categories</li>
-						<li>Popular subcategories</li>
-						<li>Popular reminders</li>
+						<li>Popular ...</li>
 						<li>Last added</li>
-					</ul>
+					</ul> */}
 					<Charts>
 						<SubCategoryChart/>
 						<ReminderChart/>

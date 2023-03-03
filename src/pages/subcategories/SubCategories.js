@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
-import  ViewWrapper  from '../../components/common/wrappers/ViewWrapper';
+import ViewWrapper from '../../components/common/wrappers/ViewWrapper';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import axios from 'axios';
 import PageHead from '../../components/common/wrappers/PageHead';
@@ -72,42 +72,61 @@ const SubCategories = () => {
 		() => [
 			{
 				field: 'name',
-				headerName: 'NAME',
+				renderHeader: () => <TableHead>NAME</TableHead>,
 				renderCell: (params) => <strong>{params.row.name}</strong>,
-				width: 200,
+				flex: 3,
+				minWidth: 200,
+				headerClassName: 'headerClassName',
 			},
 			{
 				field: 'category',
-				headerName: 'CATEGORY',
-				renderCell: (params) => (
-					<strong>
-						{/* Optional chaining operator - If category.name exists */}
-						{params.row.category?.name}
-					</strong>
-				),
-				width: 200,
+				renderHeader: () => <TableHead>CATEGORY</TableHead>,
+				renderCell: (params) => <p>{params.row.category?.name}</p>,
+				flex: 1,
+				minWidth: 200,
+				headerClassName: 'headerClassName',
 			},
 
-			{ field: 'order', headerName: 'ORDER', width: 100 },
-			{ field: 'slug', headerName: 'SLUG', width: 100 },
-			{ field: '_id', headerName: 'ID', width: 250 },
+			{
+				field: 'slug',
+				renderHeader: () => <TableHead>SLUG</TableHead>,
+				flex: 1,
+				minWidth: 200,
+				headerClassName: 'headerClassName',
+			},
+			{
+				field: '_id',
+				renderHeader: () => <TableHead>ID</TableHead>,
+				flex: 1,
+				minWidth: 200,
+				headerClassName: 'headerClassName',
+			},
 			{
 				field: 'createdAt',
-				headerName: 'CREATED AT',
+				renderHeader: () => <TableHead>CREATED AT</TableHead>,
 				type: 'date',
-				width: 200,
+				flex: 1,
+				minWidth: 200,
+				headerClassName: 'headerClassName',
+			},
+			{
+				field: 'order',
+				renderHeader: () => <TableHead>ORDER</TableHead>,
+				width: 85,
+				headerClassName: 'headerClassName',
 			},
 			{
 				field: 'actions',
 				type: 'actions',
-				headerName: 'ACTIONS',
-				width: 100,
+				renderHeader: () => <TableHead>ACTIONS</TableHead>,
+				width: 150,
+				headerClassName: 'headerClassName',
 				getActions: (params) => [
 					<GridActionsCellItem
 						icon={
 							<MdOutlineModeEditOutline
 								size={'25px'}
-								style={{ color: color.green }}
+								style={{ color: color.green, opacity: 0.7 }}
 							/>
 						}
 						label="Edit"
@@ -115,7 +134,10 @@ const SubCategories = () => {
 					/>,
 					<GridActionsCellItem
 						icon={
-							<RiDeleteBin4Line size={'25px'} style={{ color: color.red }} />
+							<RiDeleteBin4Line
+								size={'25px'}
+								style={{ color: color.red, opacity: 0.7 }}
+							/>
 						}
 						label="Delete"
 						onClick={openDeleteModal(params)}
@@ -180,4 +202,16 @@ const TableWrapper = styled.div`
 	width: 100%;
 	height: 700px; // table MUST have height prop
 	margin: 0 auto;
+	.headerClassName {
+		background: #edf3fb;
+		border-bottom: 2px solid ${color.gray};
+		border-left: .5px solid ${color.gray};
+	}
+`;
+
+const TableHead = styled.p`
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	color: ${color.blue};
 `;

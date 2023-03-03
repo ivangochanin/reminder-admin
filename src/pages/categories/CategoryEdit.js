@@ -136,9 +136,10 @@ const Form = styled.form`
 const InputWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-    width: 50%;
+    width: 100%;
 	min-width: 300px;
 	row-gap: 40px;
+	padding: 3% 10%;
 `;
 
 const MessageBox = styled.div`

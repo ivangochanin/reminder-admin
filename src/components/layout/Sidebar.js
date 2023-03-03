@@ -51,11 +51,7 @@ const Wrapper = styled.div`
 		align-items: center;
 		column-gap: 10px;
 		font-size: 16px;
-		font-weight: 600;
-		@media screen and (min-width: ${breakpoint.xxl}) {
-			font-size: 18px;
-			font-weight: 600;
-		}
+		font-weight: 400;
 	}
 `;
 
