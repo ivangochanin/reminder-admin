@@ -1,7 +1,4 @@
-# react-app01
-
-
-
+# Reminder App - Admin Panel
 
 ### START
 > nvm use 18

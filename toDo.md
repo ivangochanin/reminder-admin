@@ -1,9 +1,0 @@
-- add image to quill
-- read mp3 file
-- read xml music score
-- add dorico file - 4 download
-- table style
-- slug - lowercase & no whitespace
-- format date
-- edit/delete icons
-- mobile friendly

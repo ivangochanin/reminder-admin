@@ -104,7 +104,7 @@ const Categories = () => {
 			{
 				field: 'order',
 				renderHeader: () => <TableHead>ORDER</TableHead>,
-				width: 85,
+				width: 150,
 				headerClassName: 'headerClassName',
 			},
 			{
@@ -152,6 +152,11 @@ const Categories = () => {
 		p: 4,
 	};
 
+	const tableStyle = {
+		/* bgcolor: color.gray, */
+		border: 0
+	};
+
 	return (
 		<ViewWrapper>
 			<PageHead
@@ -175,7 +180,7 @@ const Categories = () => {
 			</Modal>
 			<TableWrapper>
 				<DataGrid
-					sx={{ border: 0 }}
+					sx={tableStyle}
 					getRowId={(row) => row._id}
 					rows={categories}
 					columns={columns}
@@ -197,7 +202,7 @@ const TableWrapper = styled.div`
 
 	.headerClassName {
 		background: #edf3fb;
-		border-bottom: 2px solid ${color.gray};
+		border-bottom: 1px solid ${color.black};
 		border-right: .5px solid ${color.gray};
 	}
 `;

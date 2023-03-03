@@ -10,13 +10,10 @@ const SubCategoryChart = () => {
 	const url = process.env.REACT_APP_API_URL;
 	const [subCategories, setSubCategories] = useState([]);
 
-
 	const getSubCategories = async () => {
 		try {
-	
 			const response = await axios.get(`${url}/admin/subcategories`);
 			setSubCategories(response.data.allSubCategories);
-	
 		} catch (error) {
 			console.log(error);
 		}

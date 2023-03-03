@@ -104,7 +104,7 @@ const Reminders = () => {
 			{
 				field: 'order',
 				renderHeader: () => <TableHead>ORDER</TableHead>,
-				width: 85,
+				width: 150,
 				headerClassName: 'headerClassName',
 			},
 			{
@@ -152,6 +152,11 @@ const Reminders = () => {
 		p: 4,
 	};
 
+	const tableStyle = {
+		/* bgcolor: color.gray, */
+		border: 0
+	};
+
 	return (
 		<ViewWrapper>
 			<PageHead
@@ -175,7 +180,7 @@ const Reminders = () => {
 			</Modal>
 			<TableWrapper>
 				<DataGrid
-					sx={{ border: 0 }}
+					sx={tableStyle}
 					getRowId={(row) => row._id}
 					rows={reminders}
 					columns={columns}
@@ -196,8 +201,8 @@ const TableWrapper = styled.div`
 	margin: 0 auto;
 	.headerClassName {
 		background: #edf3fb;
-		border-bottom: 2px solid ${color.gray};
-		border-left: .5px solid ${color.gray};
+		border-bottom: 1px solid ${color.black};
+		border-right: .5px solid ${color.gray};
 	}
 `;
 
